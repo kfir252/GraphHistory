@@ -1,4 +1,5 @@
 import time
+from pathlib import Path
 from watchdog.observers import Observer
 from watchdog.events import PatternMatchingEventHandler
 
@@ -6,19 +7,12 @@ from watchdog.events import PatternMatchingEventHandler
 # event.dest_path
 def on_created(event):
     fileName = event.src_path.split("\\")[-1]
-    print(f"{fileName} created!")
+    print('+',fileName)
 
 def on_deleted(event):
     fileName = event.src_path.split("\\")[-1]
-    print(f"{fileName} deleted!")
-
-def on_moved(event):
-    destName = event.dest_path.split("\\")[-1]
-    srcName = event.src_path.split("\\")[-1]
-    print(f"{srcName} moved to {destName}")
-
+    print('-',fileName)
 #--------
-
 
 def createEventHandeler():
     patterns = ["*"]
@@ -36,21 +30,27 @@ def createObserver(handler, path):
 def specifyHandlerFunctions(handler):
     handler.on_created = on_created
     handler.on_deleted = on_deleted
-    handler.on_moved = on_moved
 
-def main():
-    path = "C:/Users/kfirl/Desktop/DataBase work/GraphHistory/GraphHistory/global"
-    my_event_handler = createEventHandeler()
-    specifyHandlerFunctions(my_event_handler)
-    my_observer = createObserver(my_event_handler, path)
-    my_observer.start()
+def listenGlobal(path_global_):
+    handler = createEventHandeler()
+    specifyHandlerFunctions(handler)
+    observer = createObserver(handler, path_global_)
+    observer.start()
     try:
         while True:
             time.sleep(1)
     except KeyboardInterrupt:
-        my_observer.stop()
-        my_observer.join()
+        observer.stop()
+        observer.join()
 
+def run():
+    p = Path(__file__).with_name('setting')
+    with p.open('r') as f:
+        settingStr = f.read()
+        listenGlobal(settingStr.split('path=')[-1].split('\n')[0])
+
+def main():
+    run()
 
 if __name__ == "__main__":
     main()
