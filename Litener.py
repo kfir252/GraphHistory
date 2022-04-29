@@ -1,17 +1,27 @@
+from pickle import GLOBAL
 import time
 from pathlib import Path
 from watchdog.observers import Observer
 from watchdog.events import PatternMatchingEventHandler
+import shutil
+
+GLOBAL = ""
+SPAM = ""
 
 # event.src_path
 # event.dest_path
 def on_created(event):
     fileName = event.src_path.split("\\")[-1]
     print('+',fileName)
+    print(SPAM);
+    shutil.move(event.src_path, SPAM)
+    return
 
 def on_deleted(event):
     fileName = event.src_path.split("\\")[-1]
     print('-',fileName)
+    return
+
 #--------
 
 def createEventHandeler():
@@ -44,13 +54,17 @@ def listenGlobal(path_global_):
         observer.join()
 
 def run():
-    p = Path(__file__).with_name('setting')
-    with p.open('r') as f:
-        settingStr = f.read()
-        listenGlobal(settingStr.split('path=')[-1].split('\n')[0])
+    listenGlobal(GLOBAL)
 
 def main():
     run()
+
+p = Path(__file__).with_name('setting')
+with p.open('r') as f:
+    settingStr = f.read()
+
+GLOBAL = settingStr.split('GLOBAL=')[-1].split('\n')[0]
+SPAM = settingStr.split('SPAM=')[-1].split('\n')[0]
 
 if __name__ == "__main__":
     main()
