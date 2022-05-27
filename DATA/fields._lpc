@@ -1,0 +1,15 @@
+{
+  "energy": [
+    "temp",
+    "qulity"
+  ],
+  "oil": [
+    "temp",
+    "speed",
+    "time"
+  ],
+  "food": [
+    "temp",
+    "qulity"
+  ]
+}

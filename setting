@@ -1,2 +1,4 @@
-GLOBAL=C:/Users/kfirl/Desktop/DataBase work/GraphHistory/GraphHistory/GLOBAL
-SPAM=C:/Users/kfirl/Desktop/DataBase work/GraphHistory/GraphHistory/SPAM
+GLOBAL=C:/Users/kfirl/Desktop/DataBase work/GraphHistory/GraphHistory/GLOBAL;
+SPAM=C:/Users/kfirl/Desktop/DataBase work/GraphHistory/GraphHistory/DATA/SPAM;
+DATA=C:/Users/kfirl/Desktop/DataBase work/GraphHistory/GraphHistory/DATA;
+HISTORY=C:/Users/kfirl/Desktop/DataBase work/GraphHistory/GraphHistory/DATA/HISTORY;
